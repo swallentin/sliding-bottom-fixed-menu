@@ -4,12 +4,13 @@
     <title>Page Title</title>
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <style type="text/css" media="screen">
+    
     body {
         margin: 0;
 
     }
 
-    .bottom-bar{
+    .bottom-bar {
         display: none;
         background:#92d369;
         position: absolute;
@@ -25,7 +26,8 @@
     }
 
 
-    .active {
+    .bottom-bar.is-expanded {
+        /*use of !important as we have to override the element styling*/
         top: 100px!important;
     }
     </style>
@@ -51,7 +53,7 @@
 
         $("[data-toggle='bottom']").click(function() {
             var $this = $(this);
-            $($this.attr('data-toggle-target')).toggleClass('active');
+            $($this.attr('data-toggle-target')).toggleClass('is-expanded');
         });
 
         $(".bottom-bar").css({top: $(window).height() - 120 + 'px', display: 'block'} );
