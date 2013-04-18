@@ -8,34 +8,20 @@
     body {
         margin: 0;
         background-color: #f6f6f6;
+        height: 1200px;
 
     }
 
     .bottom-bar {
-        display: none;
-        position: absolute;
-        bottom:0;
+        position: fixed;
+        bottom: 0;
         width:90%;
         margin: 0 5%;
         background-color: #fff;
+        overflow: hidden;
         
         /* Transition effect */
 
-        -webkit-transition-property: top;
-        -webkit-transition-timing-function: ease-in-out;
-        -webkit-transition-duration: 0.7s;
-        -webkit-transition-delay: 0.2s;
-
-        -moz-transition-property: top;
-        -moz-transition-timing-function: ease-in-out;
-        -moz-transition-duration: 0.7s;
-        -moz-transition-delay: 0.2s;
-
-        transition-property: top;
-        transition-timing-function: ease-in-out;
-        transition-duration: 0.7s;
-        transition-delay: 0.2s;
-        
         border: 1px solid #fff;
 
         /* Border stuff */
@@ -54,6 +40,23 @@
 
     .bottom-container {
         margin: 20px;
+    }
+
+    .bottom-bar.is-transitioning {
+        -webkit-transition-property: top;
+        -webkit-transition-timing-function: ease-in-out;
+        -webkit-transition-duration: 0.7s;
+        -webkit-transition-delay: 0.2s;
+
+        -moz-transition-property: top;
+        -moz-transition-timing-function: ease-in-out;
+        -moz-transition-duration: 0.7s;
+        -moz-transition-delay: 0.2s;
+
+        transition-property: top;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.7s;
+        transition-delay: 0.2s;
     }
 
 
@@ -78,29 +81,28 @@
     </div>
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
     <script src="jquery-1.9.1.min.js"></script>
+    <script src="jquery.transitions.js"></script>
     <script type="text/javascript">
 
     $(document).ready(function() {
-
         $('html').click(function() {
 
             var $bottom_bar_toggler = $("[data-toggle='bottom']");
             var $bottom_bar = $($bottom_bar_toggler.attr('data-toggle-target'));
 
-            if( $bottom_bar.hasClass("is-expanded") ) {
-                $bottom_bar.toggleClass("is-expanded");
-            }
+            $bottom_bar.removeClass('is-expanded').addClass('is-transitioning').one($.support.transition.end, function() {
+                $bottom_bar.removeClass('is-transitioning');
+            });
+
         });
 
         $("[data-toggle='bottom']").click(function(event) {
             var $bottom_bar_toggler = $(this);
             var $bottom_bar = $($bottom_bar_toggler.attr('data-toggle-target'));
 
-            if( !$bottom_bar.hasClass("is-expanded")) {
-                $bottom_bar.toggleClass('is-expanded');
-                event.stopPropagation();
-            }
-
+            $bottom_bar.addClass('is-expanded').addClass('is-transitioning').one($.support.transition.end, function() {
+                $bottom_bar.removeClass('is-transitioning');
+            });
             event.stopPropagation();
         });
 
