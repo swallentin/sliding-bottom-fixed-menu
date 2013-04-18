@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <style type="text/css" media="screen">
+    body {
+        margin: 0;
+
+    }
+
+    .bottom-bar{
+        display: none;
+        background:#92d369;
+        position: absolute;
+        bottom:0;
+        width:90%;
+        margin: 0 5%;
+        -webkit-transition-property: top;
+        -webkit-transition-duration: 2s;
+    }
+
+    .bottom-container {
+        margin: 20px;
+    }
+
+
+    .active {
+        top: 100px!important;
+    }
+    </style>
+</head>
+<body>
+
+    <div class="bottom-bar">
+        <div class="bottom-container">
+            <button class="btn btn-primary btn-large pull-right" data-toggle="bottom" data-toggle-target=".bottom-bar">Click</button>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+        </div>
+    </div>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $("[data-toggle='bottom']").click(function() {
+            var $this = $(this);
+            $($this.attr('data-toggle-target')).toggleClass('active');
+        });
+
+        $(".bottom-bar").css({top: $(window).height() - 120 + 'px', display: 'block'} );
+        $(window).resize(function(){
+            $(".bottom-bar").css({top: $(window).height() - 120 + 'px', display: 'block'} );
+        });
+    });
+    </script>
+</body>
+</html>
