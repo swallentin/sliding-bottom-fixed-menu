@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <style type="text/css" media="screen">
+    
+    body {
+        margin: 0;
+        background-color: #f6f6f6;
+        height: 1200px;
+
+    }
+
+    .bottom-bar {
+        position: fixed;
+        bottom: 0;
+        width:90%;
+        margin: 0 5%;
+        background-color: #fff;
+        overflow: hidden;
+        
+        /* Transition effect */
+
+        border: 1px solid #fff;
+
+        /* Border stuff */
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+        -webkit-box-shadow:  0px 0px 10px 0px #c8c8c8;
+        box-shadow:  0px 0px 10px 0px #c8c8c8;
+
+
+    }
+
+    .bottom-container {
+        margin: 20px;
+        overflow: hidden;
+    }
+
+    .is-expanded > .bottom-container {
+        overflow-y: scroll;
+    }
+
+    .bottom-bar.is-transitioning {
+        -webkit-transition-property: top;
+        -webkit-transition-timing-function: ease-in-out;
+        -webkit-transition-duration: 0.7s;
+        -webkit-transition-delay: 0.2s;
+
+        -moz-transition-property: top;
+        -moz-transition-timing-function: ease-in-out;
+        -moz-transition-duration: 0.7s;
+        -moz-transition-delay: 0.2s;
+
+        transition-property: top;
+        transition-timing-function: ease-in-out;
+        transition-duration: 0.7s;
+        transition-delay: 0.2s;
+    }
+
+
+    .bottom-bar.is-expanded {
+        /*use of !important as we have to override the element styling*/
+        top: 100px!important;
+    }
+    </style>
+</head>
+<body>
+
+    <div class="bottom-bar">
+        <div class="bottom-container">
+            <button class="btn btn-primary btn-large pull-right" data-toggle="bottom" data-toggle-target=".bottom-bar">Click</button>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+            <p>teststings</p>
+        </div>
+    </div>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="jquery.transitions.js"></script>
+    <script src="jquery.scrolltotop.js"></script>
+    <script src="jquery.ba-throttle-debounce.js"></script>
+    <script type="text/javascript">
+
+
+    $("[data-toggle='bottom']").on('click', function( ){
+        var _this = this;
+        $.scrollToTop(function() {
+            console.log('im @ top');    
+        });
+    });
+
+
+    
+    $(document).ready(function() {
+        $('html').click(function() {
+
+            var $bottom_bar_toggler = $("[data-toggle='bottom']");
+            var $bottom_bar = $($bottom_bar_toggler.attr('data-toggle-target'));
+
+            $bottom_bar.removeClass('is-expanded').addClass('is-transitioning').one($.support.transition.end, function() {
+                $bottom_bar.removeClass('is-transitioning');
+            });
+
+        });
+
+        $("[data-toggle='bottom']").click(function(event) {
+            $this = $(this);
+            $.scrollToTop(function() {
+                var $bottom_bar_toggler = $this;
+                var $bottom_bar = $($bottom_bar_toggler.attr('data-toggle-target'));
+
+                $bottom_bar.addClass('is-expanded').addClass('is-transitioning').one($.support.transition.end, function() {
+                    $bottom_bar.removeClass('is-transitioning');
+                });
+                event.stopPropagation();
+            });
+        });
+
+        $(".bottom-bar").css({top: $(window).height() - 120 + 'px', display: 'block'} );
+        $(window).resize(function(){
+            $(".bottom-bar").css({top: $(window).height() - 120 + 'px', display: 'block'} );
+        });
+    });
+    </script>
+</body>
+</html>
